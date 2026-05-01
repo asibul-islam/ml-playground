@@ -17,7 +17,7 @@ export default function Predict() {
     try {
       const formData = new FormData()
       formData.append('file', file)
-      const { data } = await axios.post('http://localhost:8000/predict', formData)
+      const { data } = await axios.post('https://ml-playground-production.up.railway.app/', formData)
       if (data.error) { setErr(data.error); setLoading(false); return }
       setRows(data.predictions)
       setFeatCols(data.feat_cols)

@@ -6,7 +6,7 @@ const label = { fontSize: 11, fontWeight: 500, color: '#888', textTransform: 'up
 const pct = v => `${(v * 100).toFixed(1)}%`
 
 const downloadModel = async () => {
-  const res = await fetch('http://localhost:8000/download-model')
+  const res = await fetch('https://ml-playground-production.up.railway.app/')
   const blob = await res.blob()
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
