@@ -30,7 +30,7 @@ export default function Configure({ csvFile, headers, onResults }) {
       formData.append('target', target)
       formData.append('features', JSON.stringify(features))
       formData.append('model_type', modelType)
-      const { data } = await axios.post('https://ml-playground-production.up.railway.app/', formData)
+      const { data } = await axios.post('https://ml-playground-production.up.railway.app/train', formData)
       onResults(data)
     } catch (e) {
       setErr(e.response?.data?.detail || 'Training failed. Make sure all selected columns are numeric.')
