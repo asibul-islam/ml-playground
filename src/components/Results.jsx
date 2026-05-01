@@ -1,8 +1,18 @@
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import Predict from './Predict'
 
 const card = { background: '#fff', border: '1px solid #e5e5e5', borderRadius: 12, padding: '1.25rem', marginBottom: '1rem' }
 const label = { fontSize: 11, fontWeight: 500, color: '#888', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '1rem' }
 const pct = v => `${(v * 100).toFixed(1)}%`
+
+const downloadModel = async () => {
+  const res = await fetch('http://localhost:8000/download-model')
+  const blob = await res.blob()
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = `ml_playground_model.pkl`
+  a.click()
+}
 
 export default function Results({ data, onReset }) {
   const { accuracy, precision, recall, f1, confusion_matrix: cm, roc, feature_importance } = data
@@ -11,7 +21,16 @@ export default function Results({ data, onReset }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
         <p style={{ fontWeight: 500 }}>Results</p>
-        <button onClick={onReset} style={{ padding: '5px 14px', background: 'transparent', border: '1px solid #ddd', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>← Start over</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={downloadModel} style={{
+            padding: '5px 14px', background: '#1a1a1a', color: '#fff',
+            border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12
+          }}>Download model ↓</button>
+          <button onClick={onReset} style={{
+            padding: '5px 14px', background: 'transparent',
+            border: '1px solid #ddd', borderRadius: 6, cursor: 'pointer', fontSize: 12
+          }}>← Start over</button>
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: '1rem' }}>
@@ -75,6 +94,7 @@ export default function Results({ data, onReset }) {
           </ResponsiveContainer>
         </div>
       </div>
+      <Predict />
     </div>
   )
 }

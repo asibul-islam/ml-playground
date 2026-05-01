@@ -39,7 +39,7 @@ export default function App() {
 }
 
 function Steps({ current }) {
-  const steps = ['Upload', 'Configure', 'Results']
+  const steps = ['Upload', 'Configure', 'Results & Predict']
   return (
     <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
       {steps.map((s, i) => (
